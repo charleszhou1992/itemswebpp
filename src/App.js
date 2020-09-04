@@ -6,9 +6,12 @@ import { Route, Switch } from "react-router-dom";
 
 import "./App.css"
 
+import HeaderComponent from "../src/components/header/header"
+
 function App() {
   return (
     <div>
+      <HeaderComponent />
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route exact path="/shop" component={ShopPage} />
