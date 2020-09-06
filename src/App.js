@@ -9,7 +9,7 @@ import "./App.css"
 import HeaderComponent from "../src/components/header/header"
 import SignInSignUpPage from "../src/pages/signinsignup/signinsignup"
 
-import {auth} from "./firebase/fire-config"
+import {auth, createUserProfileDocument} from "./firebase/fire-config"
 
 class App extends React.Component {
   constructor() {
@@ -24,8 +24,9 @@ class App extends React.Component {
   unsubscribefromAuth = null;
 // persistant data
   componentDidMount(){
-    auth.onAuthStateChanged( user => {
-      this.setState({ currentUser: user });
+    this.unsubscribefromAuth = auth.onAuthStateChanged( async user => {
+      createUserProfileDocument(user);
+      this.setState({currentUser: user});
     })
   }
 
