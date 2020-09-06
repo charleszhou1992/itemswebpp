@@ -2,7 +2,7 @@ import React from "react";
 import "./signin.scss";
 import FormInput from "../form.input/form-input";
 import SignButton from "./sign-button";
-import {signInWithGoogle} from "../../firebase/fire-config"
+import { signInWithGoogle } from "../../firebase/fire-config";
 
 class SignIn extends React.Component {
   constructor(props) {
@@ -48,13 +48,13 @@ class SignIn extends React.Component {
             value={this.state.password}
             require
           />
-
-          <SignButton type="submit">
-            Sign In
-          </SignButton>
-          <SignButton onClick={signInWithGoogle}>
-            Sign In With Google
-          </SignButton>
+          <div className="buttons">
+            <SignButton type="submit">Sign In</SignButton>
+            {/* using one more className to differenciate the button */}
+            <SignButton onClick={signInWithGoogle} isgooglesignin>
+              Sign In With Google
+            </SignButton>
+          </div>
         </form>
       </div>
     );

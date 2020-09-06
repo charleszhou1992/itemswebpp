@@ -22,7 +22,7 @@ class App extends React.Component {
 
 
   unsubscribefromAuth = null;
-  ////////////////////////////////user authentication persistance
+// persistant data
   componentDidMount(){
     auth.onAuthStateChanged( user => {
       this.setState({ currentUser: user });
@@ -36,7 +36,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <HeaderComponent />
+        <HeaderComponent currentUser = {this.state.currentUser}/>
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/shop" component={ShopPage} />
