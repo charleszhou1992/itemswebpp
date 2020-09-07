@@ -20,13 +20,14 @@ firebase.initializeApp(config);
 export const createUserProfileDocument = async (userAuth, additionalData) => {
   if (!userAuth) return;
 
-  const userRef = firestore.doc(`user/${userAuth.id}`);
+//  check whether the userdata have already been saved on firestore.
+  const userRef = firestore.doc(`user/${userAuth.uid}`);
   const snapShot = await userRef.get();
 
   if (!snapShot.exists) {
     const { displayName, email } = userAuth;
     const creatTime = new Date();
-
+// if not saved, save them
     try {
       await userRef.set({
         displayName,
