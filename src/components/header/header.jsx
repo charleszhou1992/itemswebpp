@@ -5,6 +5,8 @@ import {ReactComponent as Logo} from "../../assets/crown.svg"
 import {Link} from "react-router-dom"
 import {auth} from "../../firebase/fire-config"
 
+import {connect} from "react-redux"
+
 const HeaderComponent = ({currentUser}) => (
     <div className="header">
         <Link className="logo-container" to="/">
@@ -33,4 +35,10 @@ const HeaderComponent = ({currentUser}) => (
     </div>
 )
 
-export default HeaderComponent;
+// when components need to receive state
+// connect props in this component to receive value (user) from reducer, therefore, there is no need to pass state from app.js (preventing the state drilling)
+const mapStateToProps = state => ({
+    currentUser: state.user.currentUser
+})
+
+export default connect(mapStateToProps)(HeaderComponent);

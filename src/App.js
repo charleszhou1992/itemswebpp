@@ -11,14 +11,17 @@ import SignInSignUpPage from "../src/pages/signinsignup/signinsignup";
 
 import { auth, createUserProfileDocument } from "./firebase/fire-config";
 
-class App extends React.Component {
-  constructor() {
-    super();
+import { connect } from "react-redux";
+import { setCurrentUser } from "./redux/user/user-action";
 
-    this.state = {
-      currentUser: null,
-    };
-  }
+class App extends React.Component {
+  // constructor() {
+  //   super();
+
+  //   this.state = {
+  //     currentUser: null,
+  //   };
+  // }
 
   unsubscribefromAuth = null;
   // persistant data
@@ -28,19 +31,14 @@ class App extends React.Component {
         const userRef = await createUserProfileDocument(userAuth);
 
         userRef.onSnapshot((snapShot) => {
-          this.setState({
-            currentUser: {
-              id: snapShot.id,
-              ...snapShot.data(),
-            }, 
-          }, () => {
-            console.log(this.state);
-          });
-          
+              this.props.setCurrentUser({
+                id: snapShot.id,
+                ...snapShot.data(),
+              });
+            
         });
-        
       }
-      this.setState({ currentUser: userAuth });
+      this.props.setCurrentUser(userAuth);
     });
   }
 
@@ -51,7 +49,8 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <HeaderComponent currentUser={this.state.currentUser} />
+        {/* there is no state required in headerComponent */}
+        <HeaderComponent />
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/shop" component={ShopPage} />
@@ -62,4 +61,9 @@ class App extends React.Component {
   }
 }
 
-export default App;
+// return an object (complicated hahaha)
+const mapDispatchToProps = (dispatch) => ({
+  setCurrentUser: (user) => dispatch(setCurrentUser(user)),
+});
+// null means it does not need any props from reducer (only set the state, not use state)
+export default connect(null, mapDispatchToProps)(App);
