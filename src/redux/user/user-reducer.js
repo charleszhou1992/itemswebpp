@@ -2,7 +2,7 @@ const INITIAL_STATE = {
     currentUser: null,
 }
 
-
+//testtest
 // matching the action related to changing the state
 const userReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
